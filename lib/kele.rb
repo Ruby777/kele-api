@@ -1,16 +1,12 @@
 require "httparty"
+require "json"
 
 class Kele
     include HTTParty
     
-
-    def initialize(username, password)
-        @base_url = 'https://www.bloc.io/api/v1'
-        response = self.class.post(
-             'https://blocapi.docs.apiary.io/#reference/0/sessions', 
-             email: username, 
-             password: password
-            )
+    def initialize(email, password)
+        @options = {query: {email: email, password: password}}
+        response = self.class.post('https://www.bloc.io/api/v1/sessions', @options)
         @auth_token = response["auth_token"]
         raise "Wrong email or password" if response.code != 200
     end
