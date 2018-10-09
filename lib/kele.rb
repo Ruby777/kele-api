@@ -23,8 +23,13 @@ class Kele
         JSON.parse(response.body)
     end
 
-    def get_messages
-        response = self.class.get("https://www.bloc.io/api/v1/message_threads", headers:{ "authorization" => @auth_token })
+    def get_messages(page_id = 0)
+        if page_id == 0
+            response = self.class.get("https://www.bloc.io/api/v1/message_threads", headers:{ "authorization" => @auth_token })
+        else
+            response = self.class.get("https://www.bloc.io/api/v1/message_threads", headers:{ "authorization" => @auth_token }, body:{"page": "#{page_id}"})
+        end
+        
         JSON.parse(response.body)
     end
 
