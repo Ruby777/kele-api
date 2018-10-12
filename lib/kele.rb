@@ -44,4 +44,9 @@ class Kele
         headers: { "authorization" => @auth_token })
         raise "There was a problem sending the message. Please try again" if response.code != 200
     end
+
+    def get_remaining_checkpoints(chain_id)
+        response = self.class.get("https://www.bloc.io/api/v1/enrollment_chains/#{chain_id}/checkpoints_remaining_in_section", headers:{ "authorization" => @auth_token })
+        JSON.parse(response.body)
+    end
 end
